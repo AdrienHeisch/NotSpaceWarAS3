@@ -10,7 +10,7 @@ package com.adrienheisch.spacewar.game
 	public class PlayerShip extends Ship
 	{
 		protected static const CONTROLS:Vector.<Vector.<uint>> = new < Vector.<uint> > [
-			new <uint>[Keyboard.Q, Keyboard.D, Keyboard.Z, Keyboard.S, Keyboard.C, Keyboard.V],
+			new <uint>[Keyboard.Q, Keyboard.D, Keyboard.Z, Keyboard.S, Keyboard.T, Keyboard.Y],
 			new <uint>[Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN, Keyboard.NUMPAD_2, Keyboard.NUMPAD_3]
 		];
 		
