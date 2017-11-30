@@ -12,10 +12,14 @@ package com.adrienheisch.spacewar.game
 	public class Ship extends MovieClip
 	{
 		public static var list:Vector.<Ship> = new Vector.<Ship>();
+		public static var infoList: Array;
 		
-		protected static const COLORS:Vector.<uint> = new <uint>[0xFF0000, 0x0099FF, 0x00FF00, 0xFFFFFF];
+		public static var moveBackAllowed: Boolean = false;
+		public static var autoSlow: Boolean = true;
 		
-		protected static const MAX_HEALTH:Number = 5;
+		public static const COLORS:Vector.<uint> = new <uint>[0xFF0000, 0x0099FF, 0x00FF00, 0xFFFFFF];
+		
+		public static const MAX_HEALTH:Number = 5;
 		protected static const MAX_TURNING_SPEED:Number = 3;
 		protected static const TURNING_ACCELERATION_VALUE:Number = 0.25;
 		protected static const BASE_MAX_SPEED:Number = 5;
@@ -51,7 +55,7 @@ package com.adrienheisch.spacewar.game
 			cacheAsBitmap = true;
 			
 			health = MAX_HEALTH;
-			id = list.indexOf(this) + 1;
+			id = list.indexOf(this);
 			
 			mcShootPoint.visible = false;
 			
@@ -63,12 +67,6 @@ package com.adrienheisch.spacewar.game
 		
 		public function gameLoop():void
 		{
-			if (health <= 0)
-			{
-				destroy();
-				return;
-			}
-			
 			if (input[5] && shootTimer == 0)
 				shoot();
 			else if (shootTimer != 0)
@@ -106,13 +104,13 @@ package com.adrienheisch.spacewar.game
 			else
 			{
 				acceleration.setTo(0, 0);
-				if (input[3] && GameParameters.shipMoveBackAllowed)
+				if (input[3] && moveBackAllowed)
 				{
 					acceleration.x = BRAKE * -Math.cos(rotation * Math.PI / 180);
 					acceleration.y = BRAKE * -Math.sin(rotation * Math.PI / 180);
 					
 				}
-				else if (Math.abs(velocity.length) > SELF_BRAKE && GameParameters.shipAutoSlow)
+				else if (Math.abs(velocity.length) > SELF_BRAKE && autoSlow)
 				{
 					acceleration.x = SELF_BRAKE * -Math.cos(Math.atan2(velocity.y, velocity.x));
 					acceleration.y = SELF_BRAKE * -Math.sin(Math.atan2(velocity.y, velocity.x));

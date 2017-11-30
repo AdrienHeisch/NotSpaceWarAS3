@@ -32,6 +32,13 @@ package com.adrienheisch.spacewar.utils
 		{
 			keys.splice(keys.indexOf(pEvent.keyCode), 1);
 		}
+		
+		public static function stop(): void {
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN, registerKey);
+			stage.removeEventListener(KeyboardEvent.KEY_UP, unregisterKey);
+			
+			stage = null;
+		}
 	
 	}
 

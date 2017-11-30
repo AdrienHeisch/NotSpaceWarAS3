@@ -6,12 +6,11 @@ package com.adrienheisch.spacewar.game
 	 */
 	public class GameParameters 
 	{
+		public static var nShips:uint = 4; // 2 - 4 ships
+		public static var nPlayers:uint = 1; // 1 <= N_PLAYERS <= 2
 		
-		public static var aiMovePrediction: Boolean = true;
-		public static var aiShootPrediction: Boolean = true;
 		
-		public static var shipMoveBackAllowed: Boolean = false;
-		public static var shipAutoSlow: Boolean = true;
+		
 		
 	}
 

@@ -2,6 +2,8 @@ package com.adrienheisch.spacewar.ui
 {
 	
 	import com.adrienheisch.spacewar.Main;
+	import com.adrienheisch.spacewar.background.BackgroundContainer;
+	import com.adrienheisch.spacewar.game.GameContainer;
 	import com.adrienheisch.spacewar.game.GameManager;
 	import com.adrienheisch.spacewar.game.Ship;
 	import com.adrienheisch.spacewar.utils.KeyboardManager;
@@ -42,18 +44,29 @@ package com.adrienheisch.spacewar.ui
 			else
 			{
 				_instance = this;
-				
-				txtWinner.text = Ship.list.length > 0 ? "WINNER : P" + Ship.list[0].id : "DRAW";
-				Main.instance.stage.addEventListener(Event.ENTER_FRAME, restart);
+				if (Ship.list.length > 0) {
+					txtWinner.text = "WINNER : P" + (Ship.list[0].id + 1);
+					Ship.infoList[Ship.list[0].id][0]++;
+					Hud.instance.refreshInfo();
+				}
+				addEventListener(Event.ENTER_FRAME, keyCheck);
 			}
 		}
 		
-		protected function restart(pEvent:Event):void
+		protected function keyCheck(pEvent:Event):void
 		{
 			if (KeyboardManager.keys.indexOf(Keyboard.SPACE) >= 0)
 			{
 				GameManager.destroyAllInstances();
 				GameManager.startGame();
+				
+				destroy();
+			}
+			
+			if (KeyboardManager.keys.indexOf(Keyboard.ESCAPE) >= 0)
+			{
+				Hud.instance.destroy();
+				Main.instance.restartApp();
 				
 				destroy();
 			}
@@ -64,7 +77,7 @@ package com.adrienheisch.spacewar.ui
 		 */
 		public function destroy():void
 		{
-			Main.instance.stage.removeEventListener(Event.ENTER_FRAME, restart);
+			removeEventListener(Event.ENTER_FRAME, keyCheck);
 			_instance = null;
 			if (parent != null) parent.removeChild(this);
 		}

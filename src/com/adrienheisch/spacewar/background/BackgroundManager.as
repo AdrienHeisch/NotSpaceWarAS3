@@ -31,6 +31,11 @@ package com.adrienheisch.spacewar.background
 				lStar.y = stage.stageHeight * Math.random();
 			}
 		}
+		
+		public static function stop(): void {
+			BackgroundContainer.instance.destroy();
+			stage = null;
+		}
 	
 	}
 

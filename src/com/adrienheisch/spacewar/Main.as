@@ -12,6 +12,7 @@ package com.adrienheisch.spacewar
 	 */
 	public class Main extends MovieClip
 	{
+		protected static const MANAGERS: Vector.<Class> = new <Class> [KeyboardManager, BackgroundManager, GameManager, UIManager]; //the order matters !
 		
 		protected static var _instance:Main;
 		
@@ -26,11 +27,23 @@ package com.adrienheisch.spacewar
 			
 			_instance = this;
 			
-			KeyboardManager.init();
+			initApp();
+		}
+		
+		public function initApp(): void {
+			for (var i = 0; i < MANAGERS.length; i++)
+			{
+				MANAGERS[i].init();
+			}
+		}
+		
+		public function restartApp(): void {
+			for (var i = 0; i < MANAGERS.length; i++)
+			{
+				MANAGERS[i].stop();
+			}
 			
-			BackgroundManager.init();
-			GameManager.init();
-			UIManager.init();
+			initApp();
 		}
 	
 	}

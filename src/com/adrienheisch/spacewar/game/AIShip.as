@@ -9,9 +9,10 @@ package com.adrienheisch.spacewar.game
 	 */
 	public class AIShip extends Ship
 	{
+		public static var movePrediction: Boolean = true;
+		public static var shootPrediction: Boolean = true;
+		
 		protected static const DISTANCE_BEFORE_ACCELERATION:Number = 300;
-		
-		
 		
 		protected var target:Ship;
 		
@@ -32,7 +33,7 @@ package com.adrienheisch.spacewar.game
 				for (var i = lLength - 1; i >= 0; i--)
 				{
 					lShip = list[i];
-					if (GameParameters.aiMovePrediction) lDistances[i] = MoreMaths.distanceBetweenPoints(x, y, lShip.x + (lShip.velocity.x * MoreMaths.distanceBetweenPoints(x, y, lShip.x, lShip.y) / Bullet.SPEED), lShip.y + (lShip.velocity.y * MoreMaths.distanceBetweenPoints(x, y, lShip.x, lShip.y) / Bullet.SPEED));
+					if (movePrediction) lDistances[i] = MoreMaths.distanceBetweenPoints(x, y, lShip.x + (lShip.velocity.x * MoreMaths.distanceBetweenPoints(x, y, lShip.x, lShip.y) / Bullet.SPEED), lShip.y + (lShip.velocity.y * MoreMaths.distanceBetweenPoints(x, y, lShip.x, lShip.y) / Bullet.SPEED));
 					else lDistances[i] = MoreMaths.distanceBetweenPoints(x, y, lShip.x, lShip.y);
 					lSortedDistances[i] = lDistances[i];
 				}
@@ -43,7 +44,7 @@ package com.adrienheisch.spacewar.game
 				var lDistanceToTarget:Number = lSortedDistances[1];
 				
 				var lAngle:Number;
-				if (GameParameters.aiShootPrediction)
+				if (shootPrediction)
 				{
 					var lFutureTargetPosition:Point = new Point(target.x + (target.velocity.x * lDistanceToTarget / Bullet.SPEED), target.y + (target.velocity.y * lDistanceToTarget / Bullet.SPEED));
 					lAngle = Math.atan2(lFutureTargetPosition.y - y, lFutureTargetPosition.x - x) * MoreMaths.RAD2DEG;

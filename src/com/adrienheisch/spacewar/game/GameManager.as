@@ -2,10 +2,8 @@ package com.adrienheisch.spacewar.game
 {
 	import com.adrienheisch.spacewar.Main;
 	import com.adrienheisch.spacewar.ui.UIManager;
-	import com.adrienheisch.spacewar.utils.KeyboardManager;
 	import flash.display.Stage;
 	import flash.events.Event;
-	import flash.ui.Keyboard;
 	
 	/**
 	 * ...
@@ -13,10 +11,18 @@ package com.adrienheisch.spacewar.game
 	 */
 	public class GameManager
 	{
+		public static var nShips:uint = 2; // 2 - 4 ships
+		public static var nPlayers:uint = 1; // 1 <= N_PLAYERS <= 2
+		
+		public static var aiMovePrediction:Boolean = true;
+		public static var aiShootPrediction:Boolean = true;
+		
+		public static var shipMoveBackAllowed:Boolean = false;
+		public static var shipAutoSlow:Boolean = true;
+		
 		protected static const GAMELOOP_CLASSES:Vector.<Class> = new <Class>[Ship, Bullet, Explosion];
 		
-		protected static const N_SHIPS:uint = 4; // 2 - 4 ships
-		protected static const N_PLAYERS:uint = 1; // 1 <= N_PLAYERS <= 2
+		protected static const SHIPS_PER_LINE:uint = 2;
 		
 		protected static var stage:Stage;
 		
@@ -24,33 +30,30 @@ package com.adrienheisch.spacewar.game
 		{
 			stage = Main.instance.stage;
 			
-			stage.focus = stage;
-			
 			stage.addChild(GameContainer.instance);
-			
-			startGame();
 		}
 		
 		public static function startGame():void
 		{
-			UIManager.status = UIManager.START_GAME;
+			stage.focus = stage;
 			
 			var lShip:Ship;
-			var shipsPerLine:uint = 2;
-			for (var i = 0; i < N_SHIPS - N_SHIPS % shipsPerLine; ++i)
+			for (var i = 0; i < nShips - nShips % SHIPS_PER_LINE; ++i)
 			{
-				GameContainer.instance.addChild(lShip = (N_PLAYERS > i) ? new PlayerShip() : new AIShip());
-				lShip.x = (shipsPerLine * (i % shipsPerLine) + 1) * stage.stageWidth / (2 + shipsPerLine);
-				lShip.y = (i - (i % shipsPerLine) + 1) * stage.stageHeight / (N_SHIPS);
+				GameContainer.instance.addChild(lShip = (nPlayers > i) ? new PlayerShip() : new AIShip());
+				lShip.x = (SHIPS_PER_LINE * (i % SHIPS_PER_LINE) + 1) * stage.stageWidth / (2 + SHIPS_PER_LINE);
+				lShip.y = (i - (i % SHIPS_PER_LINE) + 1) * stage.stageHeight / (nShips);
 				lShip.rotation = (i % 2 == 0) ? 0 : 180;
 			}
-			if (N_SHIPS % 2 != 0)
+			if (nShips % 2 != 0)
 			{
-				GameContainer.instance.addChild(lShip = (N_PLAYERS == N_SHIPS) ? new PlayerShip() : new AIShip());
+				GameContainer.instance.addChild(lShip = (nPlayers == nShips) ? new PlayerShip() : new AIShip());
 				lShip.x = 1 * stage.stageWidth / 2;
-				lShip.y = (N_SHIPS - 1) / shipsPerLine * stage.stageHeight / (N_SHIPS / shipsPerLine);
+				lShip.y = (nShips - 1) / SHIPS_PER_LINE * stage.stageHeight / (nShips / SHIPS_PER_LINE);
 				lShip.rotation = -90;
 			}
+			
+			UIManager.startGame();
 			
 			stage.addEventListener(Event.ENTER_FRAME, gameLoop);
 		}
@@ -82,7 +85,7 @@ package com.adrienheisch.spacewar.game
 		
 		protected static function gameOver()
 		{
-			UIManager.status = UIManager.GAME_OVER;
+			UIManager.gameOver();
 		}
 		
 		public static function destroyAllInstances():void
@@ -96,6 +99,14 @@ package com.adrienheisch.spacewar.game
 					lClass.list[j].destroy();
 				}
 			}
+		}
+		
+		public static function stop():void
+		{
+			stage.removeEventListener(Event.ENTER_FRAME, gameLoop);
+			destroyAllInstances();
+			GameContainer.instance.destroy();
+			stage = null;
 		}
 	
 	}

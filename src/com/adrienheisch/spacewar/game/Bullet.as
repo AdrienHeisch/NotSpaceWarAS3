@@ -1,6 +1,7 @@
 package com.adrienheisch.spacewar.game
 {
 	
+	import com.adrienheisch.spacewar.ui.Hud;
 	import flash.display.MovieClip;
 	import flash.geom.ColorTransform;
 	import flash.geom.Point;
@@ -46,19 +47,26 @@ package com.adrienheisch.spacewar.game
 				if (lShip != parentShip && lShip.hitTestPoint(x, y))
 				{
 					lShip.health -= DAMAGE;
+					Ship.infoList[lShip.id][2]++;
+					if (lShip.health <= 0) {
+						lShip.destroy();
+						Ship.infoList[lShip.id][1]++;
+					}
+					Hud.instance.refreshInfo();
 					destroy();
 					return;
 				}
 			}
-			/*if (x < -width || x > stage.stageWidth + width || y < -height || y > stage.stageHeight + height)
-			   {
-			   destroy();
-			   }
-			   else
-			   {*/
-			x += velocity.x;
-			y += velocity.y;
-			//}
+			
+			if (x < -width || x > stage.stageWidth + width || y < -height || y > stage.stageHeight + height)
+			{
+				destroy();
+			}
+			else
+			{
+				x += velocity.x;
+				y += velocity.y;
+			}
 		}
 		
 		public function destroy():void
