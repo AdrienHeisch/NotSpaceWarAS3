@@ -1,6 +1,6 @@
 package com.adrienheisch.spacewar.game
 {
-	import com.adrienheisch.spacewar.utils.KeyboardManager;
+	import com.adrienheisch.utils.KeyboardManager;
 	import flash.ui.Keyboard;
 	
 	/**

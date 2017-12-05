@@ -6,7 +6,7 @@ package com.adrienheisch.spacewar.ui
 	import com.adrienheisch.spacewar.game.GameContainer;
 	import com.adrienheisch.spacewar.game.GameManager;
 	import com.adrienheisch.spacewar.game.Ship;
-	import com.adrienheisch.spacewar.utils.KeyboardManager;
+	import com.adrienheisch.utils.KeyboardManager;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.text.TextField;

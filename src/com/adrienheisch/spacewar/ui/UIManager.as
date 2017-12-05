@@ -4,6 +4,7 @@ package com.adrienheisch.spacewar.ui
 	import com.adrienheisch.spacewar.ui.menus.ChooseNPlayersScreen;
 	import com.adrienheisch.spacewar.ui.menus.ChooseNShipsScreen;
 	import com.adrienheisch.spacewar.ui.menus.MainMenu;
+	import com.isartdigital.utils.Stats;
 	import flash.display.Stage;
 	
 	/**
@@ -19,6 +20,10 @@ package com.adrienheisch.spacewar.ui
 			stage = Main.instance.stage;
 			
 			stage.addChild(UIContainer.instance);
+			
+			var lStats:Stats = new Stats();
+			lStats.visible = false;
+			UIContainer.instance.addChild(lStats);
 			
 			mainMenu();
 		}

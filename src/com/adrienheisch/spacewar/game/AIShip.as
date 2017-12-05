@@ -1,6 +1,6 @@
 package com.adrienheisch.spacewar.game
 {
-	import com.adrienheisch.spacewar.utils.MoreMaths;
+	import com.adrienheisch.utils.MoreMaths;
 	import flash.geom.Point;
 	
 	/**

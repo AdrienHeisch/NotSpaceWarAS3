@@ -3,7 +3,7 @@ package com.adrienheisch.spacewar
 	import com.adrienheisch.spacewar.background.BackgroundManager;
 	import com.adrienheisch.spacewar.game.GameManager;
 	import com.adrienheisch.spacewar.ui.UIManager;
-	import com.adrienheisch.spacewar.utils.KeyboardManager;
+	import com.adrienheisch.utils.KeyboardManager;
 	import flash.display.MovieClip;
 	
 	/**
