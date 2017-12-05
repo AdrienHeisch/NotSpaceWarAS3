@@ -142,6 +142,7 @@ package com.adrienheisch.spacewar.game
 			parent.addChild(lBullet = new Bullet());
 			var lBulletCoords:Point = localToGlobal(parent.globalToLocal(new Point(mcShootPoint.x, mcShootPoint.y)));
 			lBullet.parentShip = this;
+			lBullet.parentShipId = id;
 			lBullet.x = lBulletCoords.x;
 			lBullet.y = lBulletCoords.y;
 			lBullet.rotation = rotation;

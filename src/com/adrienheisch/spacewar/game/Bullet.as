@@ -20,6 +20,7 @@ package com.adrienheisch.spacewar.game
 		public static const SPEED:Number = 10;
 		
 		public var parentShip:Ship;
+		public var parentShipId:uint;
 		public var velocity:Point;
 		
 		public function Bullet()
@@ -47,10 +48,10 @@ package com.adrienheisch.spacewar.game
 				if (lShip != parentShip && lShip.hitTestPoint(x, y))
 				{
 					lShip.health -= DAMAGE;
-					Ship.infoList[lShip.id][2]++;
+					Ship.infoList[parentShipId][2]++;
 					if (lShip.health <= 0) {
 						lShip.destroy();
-						Ship.infoList[lShip.id][1]++;
+						Ship.infoList[parentShipId][1]++;
 					}
 					Hud.instance.refreshInfo();
 					destroy();
